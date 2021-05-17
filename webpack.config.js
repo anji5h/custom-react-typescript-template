@@ -6,24 +6,28 @@ module.exports = {
   output: { path: path.join(__dirname, "build"), filename: "bundle.js" },
   mode: process.env.NODE_ENV || "development",
   resolve: {
-    extensions: [".tsx", ".ts"],
+    extensions: [".tsx", ".ts",'.js',".jsx"],
   },
   devServer: {
     contentBase: path.join(__dirname, "src"),
     port: 4000,
     open: true,
     hot: true,
-    stats: "errors-only",
+    stats: "minimal",
   },
   module: {
     rules: [
       {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
-        use: [{ loader: "react-hot" }, { loader: "ts-loader", options: { transpileOnly: true } }],
+        use: [{ loader: "ts-loader", options: { transpileOnly: true } }],
       },
       {
-        test: /\.(scss|css)$/i,
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.scss$/i,
         use: ["style-loader", "css-loader", "sass-loader"],
       },
       {
