@@ -9,10 +9,10 @@ module.exports = {
     path: path.resolve(__dirname, "build"),
     filename: "bundle.js",
     publicPath: "/",
-    assetModuleFilename: "images/[hash][ext][query]",
+    assetModuleFilename: "images/[hash][ext][query]"
   },
   resolve: {
-    extensions: [".js", ".jsx", ".ts", ".tsx"],
+    extensions: [".js", ".jsx", ".ts", ".tsx"]
   },
   module: {
     rules: [
@@ -21,36 +21,36 @@ module.exports = {
         include: path.join(__dirname, "src"),
         exclude: /node_modules/,
         use: {
-          loader: "swc-loader",
-        },
+          loader: "swc-loader"
+        }
       },
       {
         test: /\.(ico|gif|png|jpg|jpeg|mp3|mp4|ogg)$/,
-        type: "asset/resource",
+        type: "asset/resource"
       },
       {
         test: /\.(woff(2)?|svg|ttf|eot|otf)$/,
-        type: "asset/inline",
-      },
-    ],
+        type: "asset/inline"
+      }
+    ]
   },
   plugins: [
     new HtmlWebPackPlugin({
       template: path.join(__dirname, "public", "index.html"),
-      favicon: path.join(__dirname, "public", "favicon.ico"),
+      favicon: path.join(__dirname, "public", "favicon.ico")
     }),
     new CompressionPlugin({
       filename: "[path][base].br",
       algorithm: "brotliCompress",
-      test: /\.(ts|tsx|scss|css|html|svg)$/,
+      test: /\.(js|ts|jsx|tsx|css|scss|html|svg)$/,
       compressionOptions: {
         params: {
-          [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
-        },
+          [zlib.constants.BROTLI_PARAM_QUALITY]: 11
+        }
       },
       threshold: 10240,
       minRatio: 0.8,
-      deleteOriginalAssets: false,
-    }),
-  ],
+      deleteOriginalAssets: false
+    })
+  ]
 };
