@@ -2,11 +2,11 @@ const path = require("path");
 const webpack = require("webpack");
 const { merge } = require("webpack-merge");
 const common = require("./webpack.common.js");
-const dotenv = require("dotenv").config({ path: path.join(__dirname, ".env.development") });
+const dotenv = require("dotenv").config();
 
 module.exports = merge(common, {
   mode: "development",
-  devtool: "cheap-module-source-map",
+  devtool: "inline-source-map",
   module: {
     rules: [
       {
@@ -24,12 +24,15 @@ module.exports = merge(common, {
       directory: path.join(__dirname, "public"),
     },
     compress: true,
-    port: 4000,
+    port: 3000,
     open: true,
     hot: true,
     client: {
-      logging: "info",
-      overlay: true,
+      logging: "error",
+      overlay: {
+        errors: true,
+        warnings: false,
+      },
       progress: true,
     },
     historyApiFallback: true,
@@ -39,5 +42,6 @@ module.exports = merge(common, {
     new webpack.DefinePlugin({
       "process.env": JSON.stringify(dotenv.parsed),
     }),
+    new webpack.HotModuleReplacementPlugin(),
   ],
 });

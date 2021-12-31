@@ -17,9 +17,12 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         include: path.join(__dirname, "src"),
-        use:"ts-loader",
+        exclude: /node_modules/,
+        use: {
+          loader: "swc-loader",
+        },
       },
       {
         test: /\.(ico|gif|png|jpg|jpeg|mp3|mp4|ogg)$/,

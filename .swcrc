@@ -1,0 +1,34 @@
+[
+  {
+    "test": ".tsx?$",
+    "jsc": {
+      "parser": {
+        "syntax": "typescript",
+        "tsx": true
+      },
+      "transform": {
+        "react": {
+          "runtime": "automatic"
+        }
+      },
+      "target": "es5",
+      "loose": false
+    }
+  },
+  {
+    "test": ".jsx?$",
+    "jsc": {
+      "parser": {
+        "syntax": "ecmascript",
+        "jsx": true,
+        "decorators": false,
+        "dynamicImport": false
+      },
+      "transform": {
+        "react": {
+          "runtime": "automatic"
+        }
+      }
+    }
+  }
+]
