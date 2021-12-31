@@ -1,7 +1,5 @@
 const path = require("path");
-const zlib = require("zlib");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = {
   entry: path.join(__dirname, "src", "index.tsx"),
@@ -38,19 +36,6 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: path.join(__dirname, "public", "index.html"),
       favicon: path.join(__dirname, "public", "favicon.ico")
-    }),
-    new CompressionPlugin({
-      filename: "[path][base].br",
-      algorithm: "brotliCompress",
-      test: /\.(js|ts|jsx|tsx|css|scss|html|svg)$/,
-      compressionOptions: {
-        params: {
-          [zlib.constants.BROTLI_PARAM_QUALITY]: 11
-        }
-      },
-      threshold: 10240,
-      minRatio: 0.8,
-      deleteOriginalAssets: false
     })
   ]
 };

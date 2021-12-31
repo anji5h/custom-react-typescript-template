@@ -6,22 +6,22 @@ const dotenv = require("dotenv").config();
 
 module.exports = merge(common, {
   mode: "development",
-  devtool: "inline-source-map",
+  devtool: false,
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader", "postcss-loader"],
+        use: ["style-loader", "css-loader", "postcss-loader"]
       },
       {
         test: /\.scss$/,
-        use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"],
-      },
-    ],
+        use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"]
+      }
+    ]
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, "public"),
+      directory: path.join(__dirname, "public")
     },
     compress: true,
     port: 3000,
@@ -31,17 +31,17 @@ module.exports = merge(common, {
       logging: "error",
       overlay: {
         errors: true,
-        warnings: false,
+        warnings: false
       },
-      progress: true,
+      progress: true
     },
     historyApiFallback: true,
-    watchFiles: ["src/*/**", "public/*/**"],
+    watchFiles: ["src/*/**", "public/*/**"]
   },
   plugins: [
     new webpack.DefinePlugin({
-      "process.env": JSON.stringify(dotenv.parsed),
+      "process.env": JSON.stringify(dotenv.parsed)
     }),
-    new webpack.HotModuleReplacementPlugin(),
-  ],
+    new webpack.HotModuleReplacementPlugin()
+  ]
 });
