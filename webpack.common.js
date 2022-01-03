@@ -5,7 +5,8 @@ module.exports = {
   entry: path.join(__dirname, "src", "index.tsx"),
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js",
+    filename: "[name].[contenthash].js",
+    pathinfo: false,
     publicPath: "/",
     assetModuleFilename: "images/[hash][ext][query]"
   },

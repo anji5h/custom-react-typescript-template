@@ -3,10 +3,11 @@ const webpack = require("webpack");
 const { merge } = require("webpack-merge");
 const common = require("./webpack.common.js");
 const dotenv = require("dotenv").config();
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 module.exports = merge(common, {
   mode: "development",
-  devtool: false,
+  devtool: "eval-cheap-module-source-map",
   module: {
     rules: [
       {
@@ -21,19 +22,15 @@ module.exports = merge(common, {
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, "public")
+      directory: path.join(__dirname, "src", "static"),
+      publicPath: "/static"
     },
-    compress: true,
+    compress: false,
     port: 3000,
     open: true,
     hot: true,
-    client: {
-      logging: "error",
-      overlay: {
-        errors: true,
-        warnings: false
-      },
-      progress: true
+    devMiddleware: {
+      stats: "minimal"
     },
     historyApiFallback: true,
     watchFiles: ["src/*/**", "public/*/**"]
@@ -42,6 +39,6 @@ module.exports = merge(common, {
     new webpack.DefinePlugin({
       "process.env": JSON.stringify(dotenv.parsed)
     }),
-    new webpack.HotModuleReplacementPlugin()
+    new ReactRefreshWebpackPlugin()
   ]
 });

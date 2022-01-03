@@ -2,11 +2,9 @@ const path = require("path");
 const zlib = require("zlib");
 const { merge } = require("webpack-merge");
 const common = require("./webpack.common.js");
-const CopyPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserWebpackPlugin = require("terser-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = merge(common, {
@@ -27,23 +25,13 @@ module.exports = merge(common, {
   optimization: {
     minimize: true,
     minimizer: [
-      new CssMinimizerPlugin({ exclude: /node_modules/ }),
-      new TerserWebpackPlugin({ exclude: /node_modules/ })
+      new CssMinimizerPlugin(),
+      new TerserWebpackPlugin()
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin(),
-    new CopyPlugin({
-      patterns: [
-        {
-          from: path.join(__dirname, "public"),
-          globOptions: {
-            dot: true,
-            ignore: ["**/index.html"]
-          }
-        }
-      ]
+    new MiniCssExtractPlugin({
+      filename: "[name].[contenthash].css",
     }),
     new CompressionPlugin({
       filename: "[path][base].br",
