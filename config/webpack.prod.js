@@ -1,15 +1,20 @@
-const path = require("path");
 const zlib = require("zlib");
 const { merge } = require("webpack-merge");
 const common = require("./webpack.common.js");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const TerserWebpackPlugin = require("terser-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
+const TerserWebpackPlugin = require("terser-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
-module.exports = merge(common, {
+module.exports = merge(common(false), {
   mode: "production",
   devtool: "source-map",
+  output: {
+    filename: "static/js/[name].[contenthash:8].js",
+    chunkFilename: "static/js/[name].[contenthash:8].chunk.js",
+    pathinfo: false,
+    clean: true
+  },
   module: {
     rules: [
       {
@@ -24,19 +29,17 @@ module.exports = merge(common, {
   },
   optimization: {
     minimize: true,
-    minimizer: [
-      new CssMinimizerPlugin(),
-      new TerserWebpackPlugin()
-    ]
+    minimizer: [new CssMinimizerPlugin(), new TerserWebpackPlugin()]
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "[name].[contenthash].css",
+      filename: "static/css/[name].[contenthash:8].css",
+      chunkFilename: "static/css/[name].[contenthash:8].chunk.css"
     }),
     new CompressionPlugin({
       filename: "[path][base].br",
       algorithm: "brotliCompress",
-      test: /\.(js|ts|jsx|tsx|css|scss|html|svg)$/,
+      test: /\.(js|css|html|svg)$/,
       compressionOptions: {
         params: {
           [zlib.constants.BROTLI_PARAM_QUALITY]: 11
