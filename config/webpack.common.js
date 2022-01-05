@@ -40,7 +40,6 @@ module.exports = (isDevelopment = false) => ({
       },
       {
         test: /\.(ico|gif|png|jpg|jpeg|mp3|mp4|ogg)$/,
-        include: path.join(__dirname, "..", "src"),
         type: "asset/resource"
       },
       {

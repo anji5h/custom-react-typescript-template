@@ -1,3 +1,4 @@
+const path = require("path");
 const zlib = require("zlib");
 const { merge } = require("webpack-merge");
 const common = require("./webpack.common.js");
@@ -5,6 +6,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const TerserWebpackPlugin = require("terser-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = merge(common(false), {
   mode: "production",
@@ -48,6 +50,18 @@ module.exports = merge(common(false), {
       threshold: 10240,
       minRatio: 0.8,
       deleteOriginalAssets: false
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.join(__dirname, "..", "public"),
+          globOptions: {
+            dot: true,
+            gitignore: true,
+            ignore: ["**/index.html"]
+          }
+        }
+      ]
     })
   ]
 });
